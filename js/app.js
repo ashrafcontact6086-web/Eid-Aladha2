@@ -14,7 +14,7 @@
 
   const COLOR_ON_DARK  = '#dcfdff';
   const COLOR_ON_LIGHT = '#1c3245';
-  const PLACEHOLDER    = 'اكتب اسمك';
+  const PLACEHOLDER    = 'الاسم';
   const FONT_SCALE     = 0.62; // font-size relative to rect height (smaller, leaves room for descenders)
 
   const els = {
