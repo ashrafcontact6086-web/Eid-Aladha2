@@ -22,8 +22,6 @@
     nameOverlay: document.getElementById('nameOverlay'),
     nameText:    document.getElementById('nameText'),
     nameInput:   document.getElementById('nameInput'),
-    sizeInput:   document.getElementById('sizeInput'),
-    sizeValue:   document.getElementById('sizeValue'),
     thumbs:      document.querySelectorAll('.thumb'),
     downloadBtn: document.getElementById('downloadBtn'),
     cardFrame:   document.getElementById('cardFrame'),
@@ -31,7 +29,6 @@
 
   let currentIndex = 0;
   let currentName  = '';
-  let sizeRatio    = 1.0; // user-controlled multiplier (0.5 .. 1.0)
 
   function applyDesign(index) {
     const cfg = designs[index];
@@ -64,10 +61,9 @@
     fitNameSize();
   }
 
-  // Choose a font size in viewBox units that keeps the text within the rect.
-  // Caps at FONT_SCALE * rectHeight * sizeRatio (user slider), but never exceeds the rect width.
+  // Choose a font size in viewBox units that keeps the text within the rect width.
   function pickFontSizeForText(text, cfg) {
-    const cap = cfg.name.h * FONT_SCALE * sizeRatio;
+    const cap = cfg.name.h * FONT_SCALE;
     if (!text) return cap;
     const minFont = Math.min(cap, cfg.name.h * 0.30);
     const measure = document.createElement('canvas').getContext('2d');
@@ -114,16 +110,6 @@
 
   // ----- Name input -----
   els.nameInput.addEventListener('input', e => updateName(e.target.value));
-
-  // ----- Size slider -----
-  if (els.sizeInput) {
-    els.sizeInput.addEventListener('input', e => {
-      const pct = Number(e.target.value);
-      sizeRatio = pct / 100;
-      els.sizeValue.textContent = pct + '%';
-      fitNameSize();
-    });
-  }
 
   // ----- Download as PNG -----
   // We render the card SVG into a canvas at native 1078x1728 resolution,
